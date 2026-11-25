@@ -1,0 +1,17 @@
+# Headless service: har mongo pod ko stable DNS naam milta hai
+# mongo-0.mongo.emi.svc.cluster.local, mongo-1.mongo..., mongo-2.mongo...
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+  namespace: emi
+  labels:
+    app: mongo
+spec:
+  clusterIP: None
+  selector:
+    app: mongo
+  ports:
+    - name: mongo
+      port: 27017
+      targetPort: 27017
