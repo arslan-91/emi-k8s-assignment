@@ -1,32 +1,14 @@
-# Loan EMI Calculator (Assignment 4, DS-584 Cloud Computing)
+﻿# Assignment 4: Loan EMI Calculator on Kubernetes (Minikube)
 
-Node.js + Express app that computes loan EMI and stores every calculation in MongoDB.
+## Repository Structure
+- app/ : Web application, Dockerfile, .dockerignore
+- k8s/ : Kubernetes YAML manifests (MongoDB StatefulSet, Services, ConfigMap, Deployment, Ingress, HPA)
+- scripts/ : Load testing, profiling, and graph generation scripts
+- results/ : Benchmark CSVs and generated graphs (results/graphs/)
 
-## Structure
-
-- `app/`      web application (Express + jQuery + Bootstrap)
-- `k8s/`      Kubernetes manifests (added in Milestone 2 onwards)
-- `scripts/`  load-test and profiling scripts (Milestone 4)
-- `results/`  raw outputs of experiments (Milestone 4)
-
-## Run locally (Milestone 1)
-
-```powershell
-docker run -d --name mongo-local -p 27017:27017 mongo:6
-cd app
-npm install
-$env:MONGO_URL = "mongodb://localhost:27017/emidb"
-npm start
-```
-
-Open http://localhost:3000
-
-## API
-
-- `POST /api/emi`     body: `{ "principal": 500000, "rate": 12, "months": 24 }`
-- `GET  /api/history` last 10 calculations, newest first
-- `GET  /health`      200 only if MongoDB is reachable
-
-## Kubernetes
-
-Instructions for `kubectl apply -f k8s/` will be added after Milestone 2.
+## Run on Fresh Minikube
+1. minikube start
+2. minikube addons enable ingress
+3. minikube addons enable metrics-server
+4. kubectl apply -f k8s/
+5. Map 127.0.0.1 emi.local in hosts and run minikube tunnel

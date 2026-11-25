@@ -29,10 +29,10 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 5
             timeoutSeconds: 4
-            failureThreshold: 3
+            failureThreshold: 6
           livenessProbe:
             httpGet:
-              path: /
+              path: /health
               port: 3000
             initialDelaySeconds: 10
             periodSeconds: 10
@@ -43,5 +43,5 @@ spec:
               cpu: 100m
               memory: 128Mi
             limits:
-              cpu: 500m
+              cpu: 250m
               memory: 256Mi

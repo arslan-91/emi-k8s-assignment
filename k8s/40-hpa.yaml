@@ -1,0 +1,25 @@
+# Milestone 4: Horizontal Pod Autoscaler (1-5 pods, target 50% average CPU)
+# Note: default scale-down stabilization is 300 s, which is longer than the 3-minute
+# cool-down phase of the test, so it is shortened to 60 s to make scale-down visible.
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: emi-web
+  namespace: emi
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: emi-web
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 60
